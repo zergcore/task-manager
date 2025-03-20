@@ -1,11 +1,10 @@
-import React from 'react';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { Alert, CircularProgress, Container, Typography } from '@mui/material';
 import { useQuery } from "@tanstack/react-query";
-import { getAllTasks } from '../services/taskService';
-import { Task } from '../services/types';
+import { getAllTasks } from '../../services/taskService';
+import { Task } from '../../services/types';
 import { AxiosError } from 'axios';
-import { ErrorResponse } from '../types/error';
+import { ErrorResponse } from '../../types/error';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
 
@@ -48,12 +47,20 @@ const TaskChart: React.FC = () => {
         Task Overview
       </Typography>
       <PieChart width={300} height={300}>
-        <Pie data={data} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" dataKey="value">
+        <Pie 
+        data={data} 
+        cx="50%" 
+        cy="50%" 
+        outerRadius={80} 
+        fill="#8884d8" 
+        paddingAngle={5}
+        dataKey="value">
           {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
         </Pie>
         <Tooltip />
+        <Legend />
       </PieChart>
     </Container>
   );

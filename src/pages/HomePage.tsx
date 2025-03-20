@@ -1,15 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import TaskForm from "../components/tasks/TaskForm";
-import TaskList from "../components/tasks/TaskList";
 import { AuthContext } from "../context/AuthContext";
-import { Container, Typography, Snackbar, Alert, Button, Box } from '@mui/material';
+import { Container, Snackbar, Alert, Paper, Grid } from '@mui/material';
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "../types/error";
 import { getAllTasks } from "../services/taskService";
 import { Task } from "../services/types";
 import TaskBoard from "../components/tasks/TaskBoard";
-import { useCreateTaskMutation } from "../hooks/useTasks";
+import TaskChart from "../components/tasks/TaskChart";
 
 const HomePage = () => {
   const context = useContext(AuthContext);
@@ -22,7 +21,6 @@ const HomePage = () => {
   });
   const [tasks, setTasks] = useState<Task[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const createTaskMutation = useCreateTaskMutation();
 
   useEffect(() => {
     if (tasksData) {
@@ -35,26 +33,32 @@ const HomePage = () => {
     setSnackbarOpen(true);
   };
 
-  const handleCreateTask = (newTask: Omit<Task, "id">) => {
-    if (!newTask.title || !newTask.description) return;
-
-    createTaskMutation.mutate(
-      newTask,
-    );
-  };
-
   return (
     <Container sx={{ marginTop: 4 }}>
 
-      {isAuthenticated ? (
-        <TaskForm />
-      ) : (
-        <div className="text-center py-3">
-          <p>Log in to create a task</p>
-        </div>
-      )}
-
-      <TaskBoard tasks={tasks} setTasks={setTasks} onDelete={handleDelete} />
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: '16px' }}>
+              <TaskBoard tasks={tasks} setTasks={setTasks} onDelete={handleDelete} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: '16px' }}>
+            {isAuthenticated ? (
+                <TaskForm />
+              ) : (
+                <div className="text-center py-3">
+                  <p>Log in to create a task</p>
+                </div>
+              )}
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: '16px' }}>
+              <TaskChart />
+            </Paper>
+          </Grid>
+        </Grid>
 
       <Snackbar
         open={snackbarOpen}
