@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: ./
+    restart: unless-stopped
+    init: true
+    ports:
+      - "5173:5173"
+    depends_on:
+      - amplify
+    networks:
+      - app_network
+    # env_file: ./.env  # Uncomment if .env file exists
+  amplify:
+    build:
+      context: ./amplify
+    restart: unless-stopped
+    init: true
+    networks:
+      - app_network
+    # env_file: ./amplify/.env  # Uncomment if .env file exists
+networks:
+  app_network:
+    driver: bridge

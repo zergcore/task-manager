@@ -1,56 +1,38 @@
 **Task Manager**
 
-# React + TypeScript + Vite
+# Running the Project with Docker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project includes Docker configurations to simplify the setup and deployment process. Follow the steps below to build and run the application using Docker Compose.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Ensure Docker and Docker Compose are installed on your system.
+- Verify that the required Node.js version (22.13.1-slim) is supported by your Docker installation.
 
-## Expanding the ESLint configuration
+## Environment Variables
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- The application uses environment variables defined in the `.env` file. Ensure this file is present and correctly configured before proceeding.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Build and Run Instructions
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Build the Docker images and start the services:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   ```bash
+   docker-compose up --build
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+2. Access the application:
+
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+
+## Services and Ports
+
+- **app**: The main application service, exposed on port `3000`.
+- **amplify**: The backend service, not directly exposed.
+
+## Notes
+
+- The `app` service depends on the `amplify` service, which must be running for full functionality.
+- Adjust the `docker-compose.yml` file if additional customization is required.
+
+For further details, refer to the Dockerfiles and Compose file included in the project.
