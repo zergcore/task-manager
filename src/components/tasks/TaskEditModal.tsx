@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Modal, Alert } from "react-bootstrap";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateTask } from "../../services/taskService";
 import { Task } from "../../services/types";
 import { AxiosError } from "axios";
-import { Select, MenuItem } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Alert, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { ErrorResponse } from "../../types/error";
 
 const TaskEditModal = ({
@@ -32,29 +31,29 @@ const TaskEditModal = ({
   });
 
   const handleSubmit = (status: string) => {
-    if(status === task.status) return;
-
-    updateMutation.mutate({...task, status});
+    if (status === task.status) return;
+    updateMutation.mutate({ ...task, status });
   };
 
   return (
-    <Modal show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Task Status</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {error && <Alert variant="danger">{error}</Alert>}
-
-        <Select
-        value={task.status}
-        onChange={e => handleSubmit(e.target.value as unknown as string)}
-      >
-        <MenuItem value="to do">To Do</MenuItem>
-        <MenuItem value="in progress">In Progress</MenuItem>
-        <MenuItem value="completed">Completed</MenuItem>
-      </Select>
-      </Modal.Body>
-    </Modal>
+    <Dialog open={show} onClose={onHide} fullWidth maxWidth="sm">
+      <DialogTitle>Edit Task Status</DialogTitle>
+      <DialogContent dividers>
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        <FormControl fullWidth>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={task.status}
+            label="Status"
+            onChange={(e) => handleSubmit(e.target.value)}
+          >
+            <MenuItem value="to do">To Do</MenuItem>
+            <MenuItem value="in progress">In Progress</MenuItem>
+            <MenuItem value="completed">Completed</MenuItem>
+          </Select>
+        </FormControl>
+      </DialogContent>
+    </Dialog>
   );
 };
 
