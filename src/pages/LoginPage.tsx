@@ -1,25 +1,25 @@
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Box, Card, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import LoginForm from "../components/auth/LoginForm";
 
 const LoginPage = () => {
   return (
-    <Container className="py-5">
-      <Row>
-        <Col md={6} className="mx-auto">
-          <Card>
-            <Card.Body className="p-4">
-              <LoginForm />
-              <div className="text-center mt-3">
-                <p>
-                  Don't have an account?{" "}
-                  <Link to="/register">Register here</Link>
-                </p>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+    <Container maxWidth="sm" sx={{ py: 5 }}>
+      <Box display="flex" justifyContent="center">
+        <Card sx={{ width: "100%", boxShadow: 3, borderRadius: 2 }}>
+          <CardContent sx={{ p: 4 }}>
+            <LoginForm />
+            <Box textAlign="center" mt={3}>
+              <Typography>
+                Don't have an account?{' '}
+                <Button component={Link} to="/register" color="primary">
+                  Register here
+                </Button>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
     </Container>
   );
 };

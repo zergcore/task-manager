@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Form, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../../services/authService";
 import { AxiosError } from "axios";
 import { RegisterData, RegisterResponse } from "./types";
 import { ErrorResponse } from "../../types/error";
-import { Button } from "@mui/material";
+import { TextField, Button, Typography, Container, Box, Alert, CircularProgress } from "@mui/material";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -16,11 +15,7 @@ const RegisterForm = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const registerMutation = useMutation<
-    RegisterResponse,
-    AxiosError<ErrorResponse>,
-    RegisterData
-  >({
+  const registerMutation = useMutation<RegisterResponse, AxiosError<ErrorResponse>, RegisterData>({
     mutationFn: register,
     onSuccess: () => {
       navigate("/login");
@@ -43,48 +38,50 @@ const RegisterForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2 className="mb-4">Create a Task Manager Account</h2>
+    <Container maxWidth="sm">
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4, p: 3, boxShadow: 3, borderRadius: 2, bgcolor: "background.paper" }}>
+        <Typography variant="h5" gutterBottom color="textPrimary" align="center">
+          Create a Task Manager Account
+        </Typography>
 
-      {error && <Alert variant="danger">{error}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
 
-      <Form.Group className="mb-3">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
+        <TextField
+          fullWidth
+          label="Email"
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           required
+          margin="normal"
         />
-      </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
+        <TextField
+          fullWidth
+          label="Password"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
           required
-          minLength={6}
+          margin="normal"
+          helperText="Password must be at least 6 characters long"
+          inputProps={{ minLength: 6 }}
         />
-        <Form.Text className="text-muted">
-          Password must be at least 6 characters long
-        </Form.Text>
-      </Form.Group>
 
-      <Button
-        variant="contained"
-        color="primary"
-        component="button"
-        type="submit"
-        disabled={registerMutation.isPending}
-        className="w-100"
-      >
-        {registerMutation.isPending ? "Creating account..." : "Register"}
-      </Button>
-    </Form>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={registerMutation.isPending}
+          sx={{ mt: 2 }}
+        >
+          {registerMutation.isPending ? <CircularProgress size={24} /> : "Register"}
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

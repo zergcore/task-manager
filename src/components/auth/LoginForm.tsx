@@ -1,13 +1,12 @@
-import { useState, useContext } from "react"; // Agregar useContext
-import { Form, Alert } from "react-bootstrap";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { LoginData, LoginResponse } from "./types";
 import { login } from "../../services/authService";
-import { AuthContext } from "../../context/AuthContext"; // Importar AuthContext
+import { AuthContext } from "../../context/AuthContext";
 import { ErrorResponse } from "../../types/error";
-import { Button } from "@mui/material";
+import { TextField, Button, Alert, Box, Typography } from "@mui/material";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState<LoginData>({
@@ -16,7 +15,7 @@ const LoginForm = () => {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext); // Obtener el contexto de autenticación
+  const authContext = useContext(AuthContext);
 
   const loginMutation = useMutation<
     LoginResponse,
@@ -25,7 +24,6 @@ const LoginForm = () => {
   >({
     mutationFn: login,
     onSuccess: (data) => {
-      // Guardar el token y el usuario en el contexto
       if (authContext) {
         authContext.login({ email: formData.email }, data.token);
       }
@@ -49,44 +47,68 @@ const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2 className="mb-4">Login to Task Manager</h2>
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 400,
+          mx: "auto",
+          mt: 4,
+          backgroundColor: "background.default",
+          boxShadow: 4,
+          p: 3,
+          borderRadius: 1,
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h2"
+          sx={{ mb: 3, textAlign: "center" }}
+          color="text.primary"
+        >
+          Login to Task Manager
+        </Typography>
 
-      {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      <Form.Group className="mb-3">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="text"
+        <TextField
+          fullWidth
+          label="Email"
+          type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           required
+          margin="normal"
         />
-      </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
+        <TextField
+          fullWidth
+          label="Password"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
           required
+          margin="normal"
         />
-      </Form.Group>
 
-      <Button
-        component="button"
-        variant="contained"
-        color="primary"
-        type="submit"
-        disabled={loginMutation.isPending}
-        className="w-100"
-      >
-        {loginMutation.isPending ? "Logging in..." : "Login"}
-      </Button>
-    </Form>
+        <Button
+          component="button"
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={loginMutation.isPending}
+          className="w-100"
+        >
+          {loginMutation.isPending ? "Logging in..." : "Login"}
+        </Button>
+      </Box>
+    </form>
   );
 };
 

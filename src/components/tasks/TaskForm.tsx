@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Alert } from "react-bootstrap";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask } from "../../services/taskService";
 import { AxiosError } from "axios";
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Alert, Box, Typography } from '@mui/material';
 import { ErrorResponse } from "../../types/error";
 
 const TaskForm = () => {
@@ -15,9 +14,8 @@ const TaskForm = () => {
   const createTaskMutation = useMutation({
     mutationFn: createTask,
     onSuccess: () => {
-      // Invalidate and refetch the tasks list query
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      setTitle("")
+      setTitle("");
       setDescription("");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -31,12 +29,28 @@ const TaskForm = () => {
   };
 
   return (
-    <div>
-      <h5>What should we do next?</h5>
-      {error && <Alert variant="danger">{error}</Alert>}
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        What should we do next?
+      </Typography>
+      {error && <Alert severity="error">{error}</Alert>}
 
-      <TextField label="Title" fullWidth value={title} onChange={e => setTitle(e.target.value)} />
-      <TextField label="Description" fullWidth value={description} onChange={e => setDescription(e.target.value)} />
+      <TextField
+        label="Title"
+        fullWidth
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        margin="normal"
+      />
+      <TextField
+        label="Description"
+        fullWidth
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        margin="normal"
+        multiline
+        rows={3}
+      />
       <Button
         onClick={(e) => {
           e.preventDefault();
@@ -45,11 +59,11 @@ const TaskForm = () => {
         variant="contained"
         color="primary"
         disabled={createTaskMutation.isPending}
-        component="button"
+        sx={{ mt: 2 }}
       >
         {createTaskMutation.isPending ? "Creating..." : "Add a Task"}
       </Button>
-    </div>
+    </Box>
   );
 };
 
