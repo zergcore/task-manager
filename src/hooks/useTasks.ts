@@ -14,7 +14,7 @@ const useCreateTaskMutation = (): UseMutationResult<Task, AxiosError<ErrorRespon
   });
 }
 
-  const useDeleteTaskMutation = (): UseMutationResult => {
+  const useDeleteTaskMutation = (): UseMutationResult<string, AxiosError<ErrorResponse, any>, string, unknown> => {
     const queryClient = useQueryClient();
     return useMutation({
     mutationFn: deleteTask,
@@ -24,7 +24,7 @@ const useCreateTaskMutation = (): UseMutationResult<Task, AxiosError<ErrorRespon
   });
 }
 
-const useUpdateMutation = ({onSuccess, onError}): UseMutationResult => {
+const useUpdateMutation = ({onSuccess, onError}: {onSuccess: () =>void, onError: () => void}): UseMutationResult<Task, Error, { id: string; taskData: Partial<Task>; }, unknown> => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, taskData }: { id: string; taskData: Partial<Task> }) => updateTask(id, taskData),

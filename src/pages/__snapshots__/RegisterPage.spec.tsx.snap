@@ -1,0 +1,93 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RegisterPage > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="py-5 container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="mx-auto col-md-6"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="p-4 card-body"
+          >
+            <form
+              class=""
+            >
+              <h2
+                class="mb-4"
+              >
+                Create a Task Manager Account
+              </h2>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  Email
+                </label>
+                <input
+                  class="form-control"
+                  name="email"
+                  required=""
+                  type="email"
+                  value=""
+                />
+              </div>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  Password
+                </label>
+                <input
+                  class="form-control"
+                  minlength="6"
+                  name="password"
+                  required=""
+                  type="password"
+                  value=""
+                />
+                <small
+                  class="text-muted form-text"
+                >
+                  Password must be at least 6 characters long
+                </small>
+              </div>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary w-100 css-74d805-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="submit"
+              >
+                Register
+              </button>
+            </form>
+            <div
+              class="text-center mt-3"
+            >
+              <p>
+                Already have an account? 
+                <a
+                  data-discover="true"
+                  href="/login"
+                >
+                  Login here
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

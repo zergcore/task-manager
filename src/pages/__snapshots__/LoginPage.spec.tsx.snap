@@ -1,0 +1,87 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginPage > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="py-5 container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="mx-auto col-md-6"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="p-4 card-body"
+          >
+            <form
+              class=""
+            >
+              <h2
+                class="mb-4"
+              >
+                Login to Task Manager
+              </h2>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  Email
+                </label>
+                <input
+                  class="form-control"
+                  name="email"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="mb-3"
+              >
+                <label
+                  class="form-label"
+                >
+                  Password
+                </label>
+                <input
+                  class="form-control"
+                  name="password"
+                  required=""
+                  type="password"
+                  value=""
+                />
+              </div>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary w-100 css-74d805-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="submit"
+              >
+                Login
+              </button>
+            </form>
+            <div
+              class="text-center mt-3"
+            >
+              <p>
+                Don't have an account? 
+                <a
+                  data-discover="true"
+                  href="/register"
+                >
+                  Register here
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

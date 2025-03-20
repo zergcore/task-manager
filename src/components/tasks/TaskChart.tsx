@@ -18,22 +18,22 @@ const TaskChart: React.FC = () => {
     queryFn: getAllTasks,
   });
 
-    if (isLoading) {
-      return (
-        <CircularProgress />
-      );
-    }
+  if (isLoading) {
+    return (
+      <CircularProgress />
+    );
+  }
 
-    if (error) {
-      return (
-        <Alert>
-          Error loading tasks: {error.response?.data?.message || error.message}
-        </Alert>
-      );
-    }
-    if (!tasks || tasks.length === 0) {
-      return <Alert>No tasks found. Be the first create one!</Alert>;
-    }
+  if (error) {
+    return (
+      <Alert>
+        Error loading tasks: {error.response?.data?.message || error.message}
+      </Alert>
+    );
+  }
+  if (!tasks || tasks.length === 0) {
+    return <Alert>No tasks found. Be the first create one!</Alert>;
+  }
 
   const data = [
     { name: 'To Do', value: tasks.filter(t => t.status === 'to do').length },
@@ -47,14 +47,14 @@ const TaskChart: React.FC = () => {
         Task Overview
       </Typography>
       <PieChart width={300} height={300}>
-        <Pie 
-        data={data} 
-        cx="50%" 
-        cy="50%" 
-        outerRadius={80} 
-        fill="#8884d8" 
-        paddingAngle={5}
-        dataKey="value">
+        <Pie
+          data={data}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          fill="#8884d8"
+          paddingAngle={5}
+          dataKey="value">
           {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
