@@ -1,22 +1,15 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaEdit } from "react-icons/fa";
-import { deleteTask } from "../../services/taskService";
 import TaskEditModal from "./TaskEditModal";
 import { Task } from "../../services/types";
 import { ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useDeleteTaskMutation } from "../../hooks/useTasks";
 
 const TaskItem = ({ task }: { task: Task }) => {
   const [showEditModal, setShowEditModal] = useState(false);
-  const queryClient = useQueryClient();
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteTask,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-  });
+  const deleteMutation = useDeleteTaskMutation()
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this task?")) {

@@ -13,7 +13,7 @@ export const createTask = async (taskData: TaskData): Promise<Task> => {
 
 export const updateTask = async (
   id: string,
-  taskData: TaskData
+  taskData: Partial<Task>,
 ): Promise<Task> => {
   const response = await api.put<Task>(`/tasks/${id}`, taskData);
   return response.data;
